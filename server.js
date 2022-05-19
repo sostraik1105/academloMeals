@@ -4,7 +4,7 @@ const { relModels } = require('./models/relModel');
 
 relModels();
 
-db.sync({ force: true })
+db.sync()
     .then(() => {
         console.log('Connected');
     })

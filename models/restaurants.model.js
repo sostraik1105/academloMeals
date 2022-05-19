@@ -17,7 +17,10 @@ const Restaurants = db.define('restaurant', {
     },
     rating: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
+        validate: {
+            isIn: [[1, 2, 3, 4, 5]],
+        },
     },
     status: {
         type: DataTypes.STRING,

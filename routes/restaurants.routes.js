@@ -9,6 +9,10 @@ const {
 } = require('../middlewares/users.middleware');
 
 const { restaurantExists } = require('../middlewares/restaurants.middleware');
+const {
+    checkValidations,
+    createRestaurantsValidations,
+} = require('../middlewares/validation.middleware');
 
 const {
     getAllRestaurants,
@@ -26,7 +30,13 @@ router.get('/:id', restaurantExists, getRestaurant);
 
 router.use(protectToken);
 
-router.post('/', protectAdmin, createRestaurants);
+router.post(
+    '/',
+    protectAdmin,
+    createRestaurantsValidations,
+    checkValidations,
+    createRestaurants
+);
 
 router
     .route('/:id')

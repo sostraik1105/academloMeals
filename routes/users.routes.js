@@ -16,6 +16,8 @@ const {
     login,
     updateUser,
     deleteUser,
+    getOrders,
+    getOrderById,
 } = require('../controllers/users.controller');
 
 const router = Router();
@@ -30,7 +32,7 @@ router
     .patch(userExists, protectUserAccount, updateUser)
     .delete(userExists, protectUserAccount, deleteUser);
 
-router.get('/orders');
-router.get('/orders/:idOrder');
+router.get('/orders', getOrders);
+router.get('/orders/:orderId', getOrderById);
 
 module.exports = { usersRoutes: router };

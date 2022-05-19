@@ -6,17 +6,19 @@ const {
     cancelOrder,
 } = require('../controllers/orders.controller');
 
+const { protectToken } = require('../middlewares/users.middleware');
+
 const {
-    protectToken,
-    protectUserAccount,
-} = require('../middlewares/users.middleware');
+    checkValidations,
+    createOrderValidations,
+} = require('../middlewares/validation.middleware');
 
 const router = Router();
 
 router.use(protectToken);
 
 router.get('/me', getOrdersByUser);
-router.post('/', newOrder);
+router.post('/', createOrderValidations, checkValidations, newOrder);
 router.route('/:id').patch(updateOrder).delete(cancelOrder);
 
 module.exports = { ordersRoutes: router };

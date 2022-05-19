@@ -1,9 +1,11 @@
 const { Meals } = require('../models/meals.model');
+const { Restaurants } = require('../models/restaurants.model');
 const { errorHandler } = require('../utils/errorHandler');
 
 const getMeals = errorHandler(async (req, res, next) => {
     const meals = await Meals.findAll({
         where: { status: 'active' },
+        include: [{ model: Restaurants }],
     });
 
     res.status(200).json({ meals });

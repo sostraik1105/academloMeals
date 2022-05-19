@@ -67,4 +67,9 @@ const protectUserAccount = errorHandler(async (req, res, next) => {
     next();
 });
 
-module.exports = { userExists, protectToken, protectUserAccount, protectAdmin };
+module.exports = {
+    userExists,
+    protectToken,
+    protectUserAccount,
+    protectAdmin,
+};

@@ -9,6 +9,11 @@ const {
 } = require('../controllers/meals.controller');
 
 const {
+    checkValidations,
+    createMealsValidations,
+} = require('../middlewares/validation.middleware');
+
+const {
     protectToken,
     protectAdmin,
 } = require('../middlewares/users.middleware');
@@ -22,7 +27,13 @@ router.get('/:id', mealExists, getMeal);
 
 router.use(protectToken);
 
-router.post('/:restaurantId', protectAdmin, newMeal);
+router.post(
+    '/:restaurantId',
+    protectAdmin,
+    createMealsValidations,
+    checkValidations,
+    newMeal
+);
 router
     .route('/:id')
     .patch(protectAdmin, updateMeal)

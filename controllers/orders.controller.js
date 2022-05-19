@@ -30,13 +30,22 @@ const newOrder = errorHandler(async (req, res, next) => {
         mealId,
         userId: id,
         price: meal.price * quantity,
+        quantity,
     });
 
     res.json({ newOrder });
 });
 
-const updateOrder = errorHandler(async (req, res, next) => {});
+const updateOrder = errorHandler(async (req, res, next) => {
+    const { order } = req;
+    await order.update({ status: 'completed' });
+    res.status(200).json({ order });
+});
 
-const cancelOrder = errorHandler(async (req, res, next) => {});
+const cancelOrder = errorHandler(async (req, res, next) => {
+    const { order } = req;
+    await order.update({ status: 'cancelled' });
+    res.status(200).json({ order });
+});
 
 module.exports = { getOrdersByUser, newOrder, updateOrder, cancelOrder };

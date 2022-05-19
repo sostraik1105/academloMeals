@@ -3,6 +3,10 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 
 const { Users } = require('../models/users.model');
+const { Orders } = require('../models/orders.model');
+const { Meals } = require('../models/meals.model');
+const { Restaurants } = require('../models/restaurants.model');
+
 const { errorHandler } = require('../utils/errorHandler');
 const { AppError } = require('../utils/appError');
 dotenv.config({ path: './config.env' });
@@ -57,4 +61,40 @@ const deleteUser = errorHandler(async (req, res, next) => {
     res.status(200).json({ status: 'success' });
 });
 
-module.exports = { signup, login, updateUser, deleteUser };
+const getOrders = errorHandler(async (req, res, next) => {
+    const { id } = req.sessionUser;
+    const orders = await Orders.findAll({
+        where: { userId: id },
+        include: [
+            {
+                model: Meals,
+                attributes: ['name'],
+                include: [{ model: Restaurants, attributes: ['id', 'name'] }],
+            },
+        ],
+    });
+    res.json({ orders });
+});
+
+const getOrderById = errorHandler(async (req, res, next) => {
+    const { id } = req.sessionUser;
+    const { orderId } = req.params;
+    const order = await Orders.findOne({
+        where: { userId: id, id: orderId },
+    });
+
+    if (!order) {
+        return next(new AppError('order not found', 404));
+    }
+
+    res.status(200).json({ order });
+});
+
+module.exports = {
+    signup,
+    login,
+    updateUser,
+    deleteUser,
+    getOrders,
+    getOrderById,
+};

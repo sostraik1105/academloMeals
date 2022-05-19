@@ -31,6 +31,6 @@ router
     .delete(userExists, protectUserAccount, deleteUser);
 
 router.get('/orders');
-router.get('/orders/:id');
+router.get('/orders/:idOrder');
 
 module.exports = { usersRoutes: router };

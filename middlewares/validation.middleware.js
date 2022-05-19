@@ -1,4 +1,5 @@
 const { body, validationResult } = require('express-validator');
+const { AppError } = require('../utils/appError');
 
 const createUsersValidations = [
     body('name').notEmpty().withMessage('Name cannot be empty'),
@@ -15,10 +16,7 @@ const checkValidations = (req, res, next) => {
 
         const errorMsg = messages.join('. ');
 
-        return res.status(400).json({
-            status: 'error',
-            message: errorMsg,
-        });
+        return next(new AppError(errorMsg, 400));
     }
 
     next();

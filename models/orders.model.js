@@ -26,6 +26,7 @@ const Orders = db.define('order', {
     },
     status: {
         type: DataTypes.STRING,
+        defaultValue: 'active',
         validate: {
             isIn: [['active', 'cancelled', 'completed']],
         },

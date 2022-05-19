@@ -1,5 +1,7 @@
+const jwt = require('jsonwebtoken');
 const { Users } = require('../models/users.model');
 const { errorHandler } = require('../utils/errorHandler');
+const { AppError } = require('../utils/appError');
 
 const userExists = errorHandler(async (req, res, next) => {
     const { id } = req.params;
@@ -35,7 +37,7 @@ const protectToken = errorHandler(async (req, res, next) => {
     const decoded = await jwt.verify(token, process.env.JWT_PRIVATE_KEY);
 
     const user = await Users.findOne({
-        where: { id: decoded.id, status: 'enabled' },
+        where: { id: decoded.id, status: 'active' },
     });
 
     if (!user) {

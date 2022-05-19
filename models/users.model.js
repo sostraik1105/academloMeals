@@ -26,9 +26,9 @@ const Users = db.define('user', {
     status: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: 'enabled',
+        defaultValue: 'active',
         validate: {
-            isIn: [['enabled', 'disabled']],
+            isIn: [['active', 'inactive']],
         },
     },
     role: {

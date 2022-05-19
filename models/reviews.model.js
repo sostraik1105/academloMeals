@@ -19,7 +19,7 @@ const Reviews = db.define('review', {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    raiting: {
+    rating: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },

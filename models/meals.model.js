@@ -21,8 +21,9 @@ const Meals = db.define('meal', {
     },
     status: {
         type: DataTypes.STRING,
+        defaultValue: 'active',
         validate: {
-            isIn: [['enable', 'disabled']],
+            isIn: [['active', 'inactive']],
         },
     },
 });

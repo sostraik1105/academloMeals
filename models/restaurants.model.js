@@ -15,14 +15,15 @@ const Restaurants = db.define('restaurant', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    raiting: {
+    rating: {
         type: DataTypes.INTEGER,
         allowNull: true,
     },
     status: {
         type: DataTypes.STRING,
+        defaultValue: 'active',
         validate: {
-            isIn: [['enable', 'disabled']],
+            isIn: [['active', 'inactive']],
         },
     },
 });

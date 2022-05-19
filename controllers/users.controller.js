@@ -29,7 +29,7 @@ const signup = errorHandler(async (req, res, next) => {
 const login = errorHandler(async (req, res, next) => {
     const { email, password } = req.body;
 
-    const user = await Users.findOne({ where: { email, status: 'enabled' } });
+    const user = await Users.findOne({ where: { email, status: 'active' } });
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
         return next(new AppError('Invalid credentials', 400));
